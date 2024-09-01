@@ -7,10 +7,13 @@ def main():
 
     server_socket = socket.create_server(("localhost", 6379), reuse_port=True)
     client, addr = server_socket.accept()
-    client.send(convert_into_resp("+PONG\r\n"))
 
     while True:
+        request = client.recv(512)
+        data = request.decode()
 
+        if "ping" in data.lower():
+            client.send(convert_into_resp("+PONG\r\n"))
 
 
 if __name__ == "__main__":
