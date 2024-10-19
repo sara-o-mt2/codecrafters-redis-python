@@ -10,10 +10,11 @@ def main():
 
     while True:
         request = client.recv(512)
-        data = request.decode()
+        data_lines = request.decode().split('\n')
 
-        if "ping" in data.lower():
-            client.send(convert_into_resp("+PONG\r\n"))
+        for data in data_lines:
+            if "ping" in data.lower():
+                client.send(convert_into_resp("+PONG\r\n"))
 
 
 if __name__ == "__main__":
