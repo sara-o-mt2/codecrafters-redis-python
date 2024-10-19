@@ -13,6 +13,7 @@ def main():
         data_lines = request.decode().split('\n')
 
         for data in data_lines:
+            print(data)
             if "ping" in data.lower():
                 client.send(convert_into_resp("+PONG\r\n"))
 
