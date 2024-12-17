@@ -17,11 +17,14 @@ def main():
     server_socket = socket.create_server(("localhost", 6379), reuse_port=True)
     client, addr = server_socket.accept()
 
-    client_thread = threading.Thread(
-        target=handle_client, args=[client, addr]
-    )
-    client_thread.start()
-
+    while True:
+        try:
+            client_thread = threading.Thread(
+                target=handle_client, args=[client, addr]
+            )
+            client_thread.start()
+        except Exception as e:
+            print(f"Exception: {e}")
 
 if __name__ == "__main__":
     main()
