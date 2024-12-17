@@ -15,10 +15,10 @@ def handle_client(client: socket.socket, addr: tuple[str, int]) -> None:
 
 def main():
     server_socket = socket.create_server(("localhost", 6379), reuse_port=True)
-    client, addr = server_socket.accept()
 
     while True:
         try:
+            client, addr = server_socket.accept()
             client_thread = threading.Thread(
                 target=handle_client, args=[client, addr]
             )
