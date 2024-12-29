@@ -4,6 +4,7 @@ class RESPCommand:
 
     def __init__(self, decoded_msg: list[str]):
         self.command = decoded_msg[0]
+        self.arguments = []
         for arg in decoded_msg[1:]:
             self.add_argument(arg)
 
