@@ -7,7 +7,7 @@ class CommandSetArgs:
     def __init__(self, args: list[str]):
         self.key = args[0]
         self.value = args[1]
-        if args[2] == "px" and args[3].isnumeric():
+        if len(args) == 4 and args[2] == "px" and args[3].isnumeric():
             self.expiry = True
             self.interval = int(args[3])
         else:
