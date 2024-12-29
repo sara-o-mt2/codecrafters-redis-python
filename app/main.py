@@ -1,26 +1,27 @@
 import socket
 import threading
 
-from app.util import convert_into_resp
+from app.domain.entities.redis_client_requests import RedisClientRequests
+from app.domain.entities.redis_responses import RedisResponses
+from app.domain.entities.resp_command import RESPCommand
+
 
 def handle_client(client: socket.socket, addr: tuple[str, int]) -> None:
     with client:
         while True:
-            request = client.recv(512)
-            if not request:
+            row_requests = client.recv(512)
+            if not row_requests:
                 break
 
-            data_lines = request.decode().split('\n')
+            requests = RedisClientRequests(row_requests)
+            command, args = RESPCommand(requests.decode())
 
-            for line in data_lines:
-                print(f"Received: {line}")
-                data = line.split()
-                if "ping" == data[1].lower():
-                    client.send(convert_into_resp("+PONG\r\n"))
-                elif "echo" == data[1].lower():
-                    client.send(convert_into_resp("+" + data[3::2] + "\r\n"))
+            if command.command == "PING":
+                client.send(RedisResponses("PONG"))
+            elif command.command == "ECHO":
+                client.send(RedisResponses(args[0]))
 
-def main():
+def main() -> None:
     server_socket = socket.create_server(("localhost", 6379), reuse_port=True)
 
     while True:
