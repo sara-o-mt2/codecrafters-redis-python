@@ -16,3 +16,7 @@ class RESPCommand:
 
     def __str__(self):
         return f"{self.command} {' '.join(self.arguments)}"
+
+    def __iter__(self):
+        yield self.command
+        yield self.arguments
