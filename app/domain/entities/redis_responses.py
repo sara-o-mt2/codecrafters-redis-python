@@ -1,7 +1,7 @@
 class RedisResponses:
     text: str
 
-    def __init__(self, text: str):
+    def __init__(self, text: str | None = None):
         self.text = text
 
     def encode(self):
