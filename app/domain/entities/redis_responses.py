@@ -5,5 +5,8 @@ class RedisResponses:
         self.text = text
 
     def encode(self):
-        response = f"+{self.text}\r\n"
+        if self.text is None:
+            response = "$-1\r\n"
+        else:
+            response = f"+{self.text}\r\n"
         return response.encode()

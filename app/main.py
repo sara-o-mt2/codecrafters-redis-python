@@ -38,7 +38,7 @@ def handle_client(client: socket.socket, addr: tuple[str, int]) -> None:
                     if table_expiry[command.arguments[0]] < time.time() * 1000:
                         table_store.pop(command.arguments[0], None)
                         table_expiry.pop(command.arguments[0], None)
-                        response = RedisResponses("$-1")
+                        response = RedisResponses()
                         client.send(response.encode())
                         break
 
