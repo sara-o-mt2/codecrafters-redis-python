@@ -25,7 +25,7 @@ def handle_client(client: socket.socket, addr: tuple[str, int]) -> None:
                 response = RedisResponses(command.arguments[0])
                 client.send(response.encode())
             elif command.command == "SET":
-                db[command.arguments[1]] = command.arguments[2]
+                db[command.arguments[0]] = command.arguments[1]
                 response = RedisResponses("OK")
                 client.send(response.encode())
             elif command.command == "GET":
