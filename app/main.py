@@ -10,12 +10,14 @@ def handle_client(client: socket.socket, addr: tuple[str, int]) -> None:
             if not request:
                 break
 
-            data_lines = request.decode().split('\r\n')
+            data_lines = request.decode().split('\n')
 
-            for data in data_lines:
+            for line in data_lines:
+                print(f"Received: {line}")
+                data = line.split()
                 if "ping" == data[1].lower():
                     client.send(convert_into_resp("+PONG\r\n"))
-                elif "echo" in data[1].lower():
+                elif "echo" == data[1].lower():
                     client.send(convert_into_resp("+" + data[3::2] + "\r\n"))
 
 def main():
