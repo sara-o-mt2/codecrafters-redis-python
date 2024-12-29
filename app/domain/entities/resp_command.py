@@ -11,9 +11,6 @@ class RESPCommand:
     def add_argument(self, argument: str):
         self.arguments.append(argument)
 
-    def __repr__(self):
-        return self.command, self.arguments
-
     def __str__(self):
         return f"{self.command} {' '.join(self.arguments)}"
 
