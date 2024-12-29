@@ -18,12 +18,12 @@ def handle_client(client: socket.socket, addr: tuple[str, int]) -> None:
 
             if command.command == "PING":
                 response = RedisResponses("PONG")
+                client.send(response.encode())
             elif command.command == "ECHO":
                 response = RedisResponses(command.arguments[0])
+                client.send(response.encode())
             else:
                 break
-
-            client.send(response.encode())
 
 def main() -> None:
     server_socket = socket.create_server(("localhost", 6379), reuse_port=True)
